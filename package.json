@@ -18,6 +18,7 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.2.1",
+    "bullmq": "^5.37.0",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
