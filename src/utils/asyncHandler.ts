@@ -4,7 +4,7 @@ type AsyncFunction = (
   req: Request,
   res: Response,
   next: NextFunction
-) => Promise<void | Response>;
+) => Promise<any>; // response|void causes error
 
 const asyncHandler =
   (fn: AsyncFunction) => (req: Request, res: Response, next: NextFunction) =>

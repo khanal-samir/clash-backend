@@ -25,7 +25,8 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "nodemailer": "^6.10.0",
-    "prisma": "^6.2.1"
+    "prisma": "^6.2.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
