@@ -15,3 +15,8 @@ export const registerSchema = z
   });
 
 //refine takes a function and returns boolean if false sends message on confirmPassword path
+
+export const verifyEmailSchema = z.object({
+  email: z.string().email("Invalid email address."),
+  token: z.string().length(6, "Invalid OTP token."),
+});
