@@ -30,3 +30,19 @@ export const loginSchema = z.object({
   email: emailSchema,
   password: passSchema,
 });
+
+export const forgotPasswordSchema = z.object({
+  email: emailSchema,
+});
+
+export const changePasswordSchema = z
+  .object({
+    password: passSchema,
+    confirmPassword: z
+      .string()
+      .min(6, "Confirm password must be at least six characters."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
+  });

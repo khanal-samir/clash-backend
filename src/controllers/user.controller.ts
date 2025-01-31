@@ -3,6 +3,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 import bcrypt from "bcrypt";
 import prisma from "../configs/db.js";
 import {
+  changePasswordSchema,
+  forgotPasswordSchema,
   loginSchema,
   registerSchema,
   verifyEmailSchema,
@@ -10,6 +12,7 @@ import {
 import { formatError, renderEmail } from "../helper.js";
 import jwt from "jsonwebtoken";
 import { emailQueue, emailQueueName } from "../jobs/emailJob.js";
+import { v4 as uuid } from "uuid";
 
 export const registerUser = asyncHandler(async (req, res) => {
   const body = req.body;
@@ -207,7 +210,190 @@ export const loginUser = asyncHandler(async (req, res) => {
   );
 });
 
+export const checkLogin = asyncHandler(async (req, res) => {
+  const body = req.body;
+  const payload = loginSchema.safeParse(body);
+
+  if (!payload.success && payload.error) {
+    const errors = formatError(payload.error);
+    return res
+      .status(422)
+      .json(
+        new ApiResponse(
+          422,
+          errors,
+          "Invalid Data. Please check your data properly."
+        )
+      );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: payload.data.email,
+    },
+  });
+
+  if (!user)
+    return res
+      .status(404)
+      .json(
+        new ApiResponse(404, null, "User not found. Please check your email.")
+      );
+
+  const isPassCorrect = await bcrypt.compare(
+    payload.data.password,
+    user.password
+  );
+
+  if (!isPassCorrect)
+    return res
+      .status(404)
+      .json(
+        new ApiResponse(400, null, "Password is incorrect. Please try again.")
+      );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "User logged in successfully."));
+});
 export const getUser = asyncHandler(async (req, res) => {
   const user = req.user;
   return res.json(user);
+});
+
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const body = req.body;
+  const payload = forgotPasswordSchema.safeParse(body);
+
+  if (!payload.success && payload.error) {
+    const errors = formatError(payload.error);
+    return res
+      .status(422)
+      .json(
+        new ApiResponse(
+          422,
+          errors,
+          "Invalid Data. Please check your data properly."
+        )
+      );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: payload.data.email,
+    },
+  });
+
+  if (!user)
+    return res
+      .status(404)
+      .json(
+        new ApiResponse(404, null, "User not found. Please check your email.")
+      );
+
+  const token = await bcrypt.hash(uuid(), 10);
+
+  await prisma.user.update({
+    data: {
+      password_reset_token: token,
+      password_token_expiry: new Date(Date.now() + 3600000),
+    },
+    where: {
+      email: payload.data.email,
+    },
+  });
+  const url = `${process.env.CLIENT_APP_URL}/reset-password?email=${payload.data.email}&token=${token}`;
+  const html = await renderEmail("forgot-password", { name: user.name, url });
+  await emailQueue.add(emailQueueName, {
+    to: payload.data.email,
+    subject: "Clash | Reset Password",
+    html,
+  });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        null,
+        "Password reset link send successfully. Please check your email."
+      )
+    );
+});
+
+export const changePassword = asyncHandler(async (req, res) => {
+  const { email, token } = req.query;
+  const body = req.body;
+  const payload = changePasswordSchema.safeParse(body);
+
+  if (!payload.success && payload.error) {
+    const errors = formatError(payload.error);
+    return res
+      .status(422)
+      .json(
+        new ApiResponse(
+          422,
+          errors,
+          "Invalid Data. Please check your data properly."
+        )
+      );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email.toString(),
+    },
+  });
+
+  if (!user)
+    return res
+      .status(404)
+      .json(
+        new ApiResponse(
+          404,
+          null,
+          `User with ${email} not found. Please try again.`
+        )
+      );
+
+  const isTokenCorrect = user.password_reset_token === token.toString();
+  const isTokenNotExpired = user.password_token_expiry > new Date(Date.now());
+
+  if (isTokenCorrect && isTokenNotExpired) {
+    const hashedPass = await bcrypt.hash(payload.data.password, 10);
+
+    await prisma.user.update({
+      data: {
+        password: hashedPass,
+        password_reset_token: null,
+        password_token_expiry: null,
+      },
+      where: {
+        email: email.toString(),
+      },
+    });
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          null,
+          "Password changed successfully. Proceed to login."
+        )
+      );
+  } else if (!isTokenCorrect) {
+    return res
+      .status(400)
+      .json(new ApiResponse(400, null, "Password reset token is invalid."));
+  } else {
+    return res
+      .status(400)
+      .json(
+        new ApiResponse(
+          400,
+          null,
+          "Password reset token has expired. Please try again."
+        )
+      );
+  }
 });

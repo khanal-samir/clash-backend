@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import { Response, NextFunction } from "express";
-import type { Request } from "express";
 import { ApiResponse } from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
