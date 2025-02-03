@@ -37,6 +37,8 @@ export const forgotPasswordSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
+    email: emailSchema,
+    token: z.string(),
     password: passSchema,
     confirmPassword: z
       .string()

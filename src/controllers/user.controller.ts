@@ -291,6 +291,16 @@ export const forgotPassword = asyncHandler(async (req, res) => {
         new ApiResponse(404, null, "User not found. Please check your email.")
       );
 
+  if (!user.is_verified)
+    return res
+      .status(404)
+      .json(
+        new ApiResponse(
+          401,
+          null,
+          "User is not verified. Please verify your email."
+        )
+      );
   const token = await bcrypt.hash(uuid(), 10);
 
   await prisma.user.update({
@@ -322,7 +332,6 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 });
 
 export const changePassword = asyncHandler(async (req, res) => {
-  const { email, token } = req.query;
   const body = req.body;
   const payload = changePasswordSchema.safeParse(body);
 
@@ -340,8 +349,12 @@ export const changePassword = asyncHandler(async (req, res) => {
   }
 
   const user = await prisma.user.findUnique({
+    select: {
+      password_reset_token: true,
+      password_token_expiry: true,
+    },
     where: {
-      email: email.toString(),
+      email: payload.data.email,
     },
   });
 
@@ -352,11 +365,11 @@ export const changePassword = asyncHandler(async (req, res) => {
         new ApiResponse(
           404,
           null,
-          `User with ${email} not found. Please try again.`
+          `User with ${payload.data.email} not found. Please try again.`
         )
       );
 
-  const isTokenCorrect = user.password_reset_token === token.toString();
+  const isTokenCorrect = user.password_reset_token === payload.data.token;
   const isTokenNotExpired = user.password_token_expiry > new Date(Date.now());
 
   if (isTokenCorrect && isTokenNotExpired) {
@@ -369,7 +382,7 @@ export const changePassword = asyncHandler(async (req, res) => {
         password_token_expiry: null,
       },
       where: {
-        email: email.toString(),
+        email: payload.data.email,
       },
     });
     return res
