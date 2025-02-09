@@ -5,7 +5,6 @@ import {
   formatError,
   ImageValidator,
   removeImage,
-  renderEmail,
 } from "../helper.js";
 import { clashSchema } from "../validations/clashValidation.js";
 import { UploadedFile } from "express-fileupload";
@@ -27,11 +26,11 @@ export const postClash = asyncHandler(async (req, res) => {
         )
       );
   }
-  if (!req.files.image)
+
+  if (!req.files)
     return res
       .status(400)
       .json(new ApiResponse(400, null, "Image is required."));
-
   //file validation
   const img = req.files.image as UploadedFile; // not an array single file
   const validationMsg = ImageValidator(img.size, img.mimetype); //comes automatically with expressfile upload
@@ -89,12 +88,12 @@ export const getClashByID = asyncHandler(async (req, res) => {
     where: {
       id: id,
     },
-    select: {
-      title: true,
-      image: true,
-      description: true,
-      created_at: true,
-      expired_at: true,
+    include: {
+      // title: true,
+      // image: true,
+      // description: true,
+      // created_at: true,
+      // expired_at: true,
       user: {
         select: {
           name: true,

@@ -3,6 +3,7 @@ import "dotenv/config";
 import Routes from "./routes/index.js";
 import { appLimit } from "./configs/ratelimit.js";
 import fileUpload from "express-fileupload";
+import cors from "cors";
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
 
@@ -17,6 +18,7 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+app.use(cors());
 
 //routes
 app.use(Routes);
