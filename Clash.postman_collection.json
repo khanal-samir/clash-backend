@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "bfe445d1-519c-42bc-94a8-c58905a48753",
+		"name": "Clash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38506776"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Samir Khanal\",\n    \"email\":\"khanalsamir52@gmail.com\",\n    \"password\":\"123456\",\n    \"confirmPassword\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/register",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODI1NTQ0MCwiZXhwIjoxNzM5NTUxNDQwfQ.DpUo3MncZqNijvRtX-WPOF5-8y78urDCwimq3nIuZUg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"email\":\"khanalsamir52@gmail.com\",\n    \"password\":\"123456\"\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check-login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODI1NTQ0MCwiZXhwIjoxNzM5NTUxNDQwfQ.DpUo3MncZqNijvRtX-WPOF5-8y78urDCwimq3nIuZUg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"email\":\"khanalsamir52@gmail.com\",\n    \"password\":\"123456\"\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/check-login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"check-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODI1NTQ0MCwiZXhwIjoxNzM5NTUxNDQwfQ.DpUo3MncZqNijvRtX-WPOF5-8y78urDCwimq3nIuZUg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"email\":\"khanalsamir52@gmail.com\"\n    \n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/forgot-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODI1NTQ0MCwiZXhwIjoxNzM5NTUxNDQwfQ.DpUo3MncZqNijvRtX-WPOF5-8y78urDCwimq3nIuZUg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"token\":\"$2b$10$ON0v2yo4MKiRn5wl6dsNgufrMK3EYrqEnKzSsOYqit3ylCQcw.yaG\",\n    \"email\":\"gdssamir@gmail.com\",\n    \"password\":\"12345678\",\n     \"confirmPassword\":\"12345678\"\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/reset-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "gdsamir@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "token",
+									"value": "$2b$10$ON0v2yo4MKiRn5wl6dsNgufrMK3EYrqEnKzSsOYqit3ylCQcw.yaG",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/user/verify-email?email=khanalsamir52@gmail.com&token=652828",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"verify-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "khanalsamir52@gmail.com"
+								},
+								{
+									"key": "token",
+									"value": "652828"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clash",
+			"item": [
+				{
+					"name": "postClash",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODU1NTQxNSwiZXhwIjoxNzM5ODUxNDE1fQ.scj1fG7ctsBc5HjTu5an6DI8ZLOpnX88_RzE9_44fy8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Testing",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description testing",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/samir/Pictures/mypic.jpeg"
+								},
+								{
+									"key": "expired_at",
+									"value": "2025-2-14 18:07:56",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/clash/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"clash",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateClash",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODU1NTQxNSwiZXhwIjoxNzM5ODUxNDE1fQ.scj1fG7ctsBc5HjTu5an6DI8ZLOpnX88_RzE9_44fy8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Testing",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description testing",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/samir/Pictures/mypic.jpeg"
+								},
+								{
+									"key": "expired_at",
+									"value": "2025-2-14 18:07:56",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/clash/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"clash",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClash",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODU1NTQxNSwiZXhwIjoxNzM5ODUxNDE1fQ.scj1fG7ctsBc5HjTu5an6DI8ZLOpnX88_RzE9_44fy8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/clash/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"clash",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClashByID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODU1NTQxNSwiZXhwIjoxNzM5ODUxNDE1fQ.scj1fG7ctsBc5HjTu5an6DI8ZLOpnX88_RzE9_44fy8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/clash/cm6oj2ben0001r39xwh5n5pep",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"clash",
+								"cm6oj2ben0001r39xwh5n5pep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClash",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtNmdkYjN1eTAwMDByM2t5M251NGFwbWQiLCJuYW1lIjoiU2FtaXIgS2hhbmFsIiwiZW1haWwiOiJraGFuYWxzYW1pcjUyQGdtYWlsLmNvbSIsImlhdCI6MTczODU1NTQxNSwiZXhwIjoxNzM5ODUxNDE1fQ.scj1fG7ctsBc5HjTu5an6DI8ZLOpnX88_RzE9_44fy8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/clash/cm6oj2ben0001r39xwh5n5pep",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"clash",
+								"cm6oj2ben0001r39xwh5n5pep"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
