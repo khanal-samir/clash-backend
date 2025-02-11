@@ -89,11 +89,23 @@ export const getClashByID = asyncHandler(async (req, res) => {
       id: id,
     },
     include: {
-      // title: true,
-      // image: true,
-      // description: true,
-      // created_at: true,
-      // expired_at: true,
+      ClashItem: {
+        select: {
+          image: true,
+          id: true,
+          count: true,
+        },
+      },
+      ClashComments: {
+        select: {
+          id: true,
+          comment: true,
+          created_at: true,
+        },
+        orderBy: {
+          created_at: "desc",
+        },
+      },
       user: {
         select: {
           name: true,

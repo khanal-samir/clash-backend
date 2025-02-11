@@ -4,8 +4,21 @@ import Routes from "./routes/index.js";
 import { appLimit } from "./configs/ratelimit.js";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import { Server } from "socket.io";
+import { createServer, Server as HttpServer } from "http";
+import { setupSocket } from "./socket.js";
+
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
+const server: HttpServer = createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_APP_URL,
+  },
+});
+setupSocket(io);
+export { io };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,4 +40,4 @@ app.get("/", async (req: Request, res: Response) => {
   res.status(200).json({ msg: "Server is running ;)" });
 });
 
-app.listen(PORT, () => console.log(`⚙️ Server is running at port:${PORT}`));
+server.listen(PORT, () => console.log(`⚙️ Server is running at port:${PORT}`));
